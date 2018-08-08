@@ -36,10 +36,10 @@ type alias GameModel =
     }
 
 
-initialGameModel : (Int, Int) -> GameModel
-initialGameModel (x, y) =
+initialGameModel : Coord -> GameModel
+initialGameModel foodCoord =
     { snekk = initialSnekk
     , lastTickDirection = East
     , desiredDirection = East
-    , food = Coord x y
+    , food = foodCoord
     }
