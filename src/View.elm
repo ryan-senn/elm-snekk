@@ -10,6 +10,9 @@ import List.Nonempty as Nonempty
 import Msg exposing (Msg)
 import Model exposing (Model)
 
+import Config
+import Coord exposing (Coord)
+
 
 view : Model -> Html Msg
 view model =
@@ -23,10 +26,10 @@ view model =
                 loading
 
             Model.Started gameModel ->
-                game gameModel
+                game model.highestScore gameModel
 
-            Model.GameOver ->
-                gameOver
+            Model.GameOver score ->
+                gameOver model.highestScore score
         ]
 
 
@@ -48,34 +51,46 @@ loading =
         ]
 
 
-game : Model.GameModel -> Html Msg
-game gameModel =
+game : Int -> Model.GameModel -> Html Msg
+game highestScore gameModel =
     div
-        [ Css.grid ]
-        ( List.map (row gameModel) (List.range 0 Model.gridSize |> List.reverse) )
+        []
+        [ div
+            []
+            [ div
+                []
+                [ text <| "Score: " ++ toString (Nonempty.length gameModel.snekk - 3) ]
+            , div
+                []
+                [ text <| "Highest Score: " ++ toString highestScore ]
+            ]
+        , div
+            [ Css.grid ]
+            ( List.map (row gameModel) (List.range 0 Config.gridSize |> List.reverse) )
+        ]
 
 
 row : Model.GameModel -> Int -> Html Msg
 row gameModel y =
     div
         [ Css.row ]
-        ( List.map (\x -> square gameModel  <| Model.Coord x y) (List.range 0 Model.gridSize) )
+        ( List.map (\x -> square gameModel <| Coord x y) (List.range 0 Config.gridSize) )
 
 
-square : Model.GameModel -> Model.Coord -> Html Msg
+square : Model.GameModel -> Coord -> Html Msg
 square gameModel coord =
     div
         [ Css.square (Nonempty.member coord gameModel.snekk) (coord == gameModel.food) ]
         []
 
 
-gameOver : Html Msg
-gameOver =
+gameOver : Int -> Int -> Html Msg
+gameOver highestScore score =
     div
         []
         [ div
             []
-            [ text "Game Over :("]
+            [ text <| "Game Over! Score: " ++ toString score ++ " Highest Score: " ++ toString highestScore ]
         , button
             [ onClick Msg.StartGame ]
             [ text "Try Again!" ]

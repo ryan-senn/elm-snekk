@@ -36,8 +36,8 @@ square : Bool -> Bool -> Attribute Msg
 square isSnekk isFood =
     css
         [ flexGrow <| int 1
-        , width <| Css.rem 1
-        , height <| Css.rem 1
+        , width <| Css.rem 1.5
+        , height <| Css.rem 1.5
         , border3 (px 1) solid (hex "efefef")
         , backgroundColor <| if isSnekk then hex "cccccc" else if isFood then hex "666666" else hex "ffffff"
         ]

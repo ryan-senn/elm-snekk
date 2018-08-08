@@ -6,6 +6,8 @@ import Keyboard
 import Msg exposing (Msg (..))
 import Model exposing (Model)
 
+import Config
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -19,7 +21,7 @@ ticks : Model.GameState -> Sub Msg
 ticks gameState =
     case gameState of
         Model.Started _ ->
-            Time.every Model.speed (always Tick)
+            Time.every Config.speed (always Tick)
 
         _ ->
             Sub.none

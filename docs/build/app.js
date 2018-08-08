@@ -15845,6 +15845,81 @@ var _rtfeldman$elm_css$Html_Styled_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
+var _ryan_senn$snekk$Config$speed = _elm_lang$core$Time$millisecond * 200;
+var _ryan_senn$snekk$Config$gridSize = 12;
+
+var _ryan_senn$snekk$Coord$Coord = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+
+var _ryan_senn$snekk$Direction$West = {ctor: 'West'};
+var _ryan_senn$snekk$Direction$South = {ctor: 'South'};
+var _ryan_senn$snekk$Direction$East = {ctor: 'East'};
+var _ryan_senn$snekk$Direction$North = {ctor: 'North'};
+var _ryan_senn$snekk$Direction$oppositeDirection = function (direction) {
+	var _p0 = direction;
+	switch (_p0.ctor) {
+		case 'North':
+			return _ryan_senn$snekk$Direction$South;
+		case 'East':
+			return _ryan_senn$snekk$Direction$West;
+		case 'South':
+			return _ryan_senn$snekk$Direction$North;
+		default:
+			return _ryan_senn$snekk$Direction$East;
+	}
+};
+
+var _ryan_senn$snekk$Snekk$initialSnekk = A2(
+	_mgold$elm_nonempty_list$List_Nonempty$Nonempty,
+	A2(_ryan_senn$snekk$Coord$Coord, 3, _ryan_senn$snekk$Config$gridSize - 1),
+	{
+		ctor: '::',
+		_0: A2(_ryan_senn$snekk$Coord$Coord, 2, _ryan_senn$snekk$Config$gridSize - 1),
+		_1: {
+			ctor: '::',
+			_0: A2(_ryan_senn$snekk$Coord$Coord, 1, _ryan_senn$snekk$Config$gridSize - 1),
+			_1: {ctor: '[]'}
+		}
+	});
+
+var _ryan_senn$snekk$Model$initialGameModel = function (_p0) {
+	var _p1 = _p0;
+	return {
+		snekk: _ryan_senn$snekk$Snekk$initialSnekk,
+		lastTickDirection: _ryan_senn$snekk$Direction$East,
+		desiredDirection: _ryan_senn$snekk$Direction$East,
+		food: A2(_ryan_senn$snekk$Coord$Coord, _p1._0, _p1._1)
+	};
+};
+var _ryan_senn$snekk$Model$Model = F2(
+	function (a, b) {
+		return {gameState: a, highestScore: b};
+	});
+var _ryan_senn$snekk$Model$GameModel = F4(
+	function (a, b, c, d) {
+		return {snekk: a, lastTickDirection: b, desiredDirection: c, food: d};
+	});
+var _ryan_senn$snekk$Model$GameOver = function (a) {
+	return {ctor: 'GameOver', _0: a};
+};
+var _ryan_senn$snekk$Model$Started = function (a) {
+	return {ctor: 'Started', _0: a};
+};
+var _ryan_senn$snekk$Model$Loading = {ctor: 'Loading'};
+var _ryan_senn$snekk$Model$NotStarted = {ctor: 'NotStarted'};
+var _ryan_senn$snekk$Model$initialModel = {gameState: _ryan_senn$snekk$Model$NotStarted, highestScore: 0};
+
+var _ryan_senn$snekk$Helpers$getSnekk = function (gameState) {
+	var _p0 = gameState;
+	if (_p0.ctor === 'Started') {
+		return _p0._0.snekk;
+	} else {
+		return _ryan_senn$snekk$Snekk$initialSnekk;
+	}
+};
+
 var _ryan_senn$snekk$Msg$SetDirection = function (a) {
 	return {ctor: 'SetDirection', _0: a};
 };
@@ -15854,80 +15929,23 @@ var _ryan_senn$snekk$Msg$SetFood = function (a) {
 };
 var _ryan_senn$snekk$Msg$StartGame = {ctor: 'StartGame'};
 
-var _ryan_senn$snekk$Model$speed = _elm_lang$core$Time$millisecond * 200;
-var _ryan_senn$snekk$Model$gridSize = 16;
-var _ryan_senn$snekk$Model$Model = function (a) {
-	return {gameState: a};
-};
-var _ryan_senn$snekk$Model$GameModel = F3(
-	function (a, b, c) {
-		return {snekk: a, direction: b, food: c};
-	});
-var _ryan_senn$snekk$Model$Coord = F2(
-	function (a, b) {
-		return {x: a, y: b};
-	});
-var _ryan_senn$snekk$Model$GameOver = {ctor: 'GameOver'};
-var _ryan_senn$snekk$Model$Started = function (a) {
-	return {ctor: 'Started', _0: a};
-};
-var _ryan_senn$snekk$Model$Loading = {ctor: 'Loading'};
-var _ryan_senn$snekk$Model$NotStarted = {ctor: 'NotStarted'};
-var _ryan_senn$snekk$Model$initialModel = {gameState: _ryan_senn$snekk$Model$NotStarted};
-var _ryan_senn$snekk$Model$West = {ctor: 'West'};
-var _ryan_senn$snekk$Model$South = {ctor: 'South'};
-var _ryan_senn$snekk$Model$East = {ctor: 'East'};
-var _ryan_senn$snekk$Model$initialGameModel = function (_p0) {
-	var _p1 = _p0;
-	return {
-		snekk: A2(
-			_mgold$elm_nonempty_list$List_Nonempty$Nonempty,
-			A2(_ryan_senn$snekk$Model$Coord, 1, 1),
-			{
-				ctor: '::',
-				_0: A2(_ryan_senn$snekk$Model$Coord, 1, 2),
-				_1: {
-					ctor: '::',
-					_0: A2(_ryan_senn$snekk$Model$Coord, 1, 3),
-					_1: {ctor: '[]'}
-				}
-			}),
-		direction: _ryan_senn$snekk$Model$East,
-		food: A2(_ryan_senn$snekk$Model$Coord, _p1._0, _p1._1)
-	};
-};
-var _ryan_senn$snekk$Model$North = {ctor: 'North'};
-var _ryan_senn$snekk$Model$oppositeDirection = function (direction) {
-	var _p2 = direction;
-	switch (_p2.ctor) {
-		case 'North':
-			return _ryan_senn$snekk$Model$South;
-		case 'East':
-			return _ryan_senn$snekk$Model$West;
-		case 'South':
-			return _ryan_senn$snekk$Model$North;
-		default:
-			return _ryan_senn$snekk$Model$East;
-	}
-};
-
 var _ryan_senn$snekk$Update$keyCodeDirection = function (keyCode) {
 	var _p0 = keyCode;
 	switch (_p0) {
 		case 38:
-			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Model$North);
+			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Direction$North);
 		case 39:
-			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Model$East);
+			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Direction$East);
 		case 40:
-			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Model$South);
+			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Direction$South);
 		case 37:
-			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Model$West);
+			return _elm_lang$core$Maybe$Just(_ryan_senn$snekk$Direction$West);
 		default:
 			return _elm_lang$core$Maybe$Nothing;
 	}
 };
 var _ryan_senn$snekk$Update$isOutOfBoundaries = function (coord) {
-	return (_elm_lang$core$Native_Utils.cmp(coord.y, _ryan_senn$snekk$Model$gridSize) > 0) || ((_elm_lang$core$Native_Utils.cmp(coord.y, 0) < 0) || ((_elm_lang$core$Native_Utils.cmp(coord.x, _ryan_senn$snekk$Model$gridSize) > 0) || (_elm_lang$core$Native_Utils.cmp(coord.x, 0) < 0)));
+	return (_elm_lang$core$Native_Utils.cmp(coord.y, _ryan_senn$snekk$Config$gridSize) > 0) || ((_elm_lang$core$Native_Utils.cmp(coord.y, 0) < 0) || ((_elm_lang$core$Native_Utils.cmp(coord.x, _ryan_senn$snekk$Config$gridSize) > 0) || (_elm_lang$core$Native_Utils.cmp(coord.x, 0) < 0)));
 };
 var _ryan_senn$snekk$Update$move = F2(
 	function (direction, snekk) {
@@ -15971,7 +15989,7 @@ var _ryan_senn$snekk$Update$setFood = F2(
 				_elm_lang$core$Native_Utils.update(
 					_p4._0,
 					{
-						food: A2(_ryan_senn$snekk$Model$Coord, _p5, _p6)
+						food: A2(_ryan_senn$snekk$Coord$Coord, _p5, _p6)
 					}));
 		} else {
 			return _ryan_senn$snekk$Model$Started(
@@ -15979,10 +15997,38 @@ var _ryan_senn$snekk$Update$setFood = F2(
 					{ctor: '_Tuple2', _0: _p5, _1: _p6}));
 		}
 	});
+var _ryan_senn$snekk$Update$foodGenerator = function (gameState) {
+	return A2(
+		_elm_lang$core$Random$andThen,
+		function (_p7) {
+			var _p8 = _p7;
+			var _p11 = _p8._1;
+			var _p10 = _p8._0;
+			return A2(
+				_mgold$elm_nonempty_list$List_Nonempty$member,
+				A2(_ryan_senn$snekk$Coord$Coord, _p10, _p11),
+				_ryan_senn$snekk$Helpers$getSnekk(gameState)) ? _ryan_senn$snekk$Update$foodGenerator(gameState) : A2(
+				_elm_lang$core$Random$map,
+				function (_p9) {
+					return {ctor: '_Tuple2', _0: _p10, _1: _p11};
+				},
+				_elm_lang$core$Random$bool);
+		},
+		A2(
+			_elm_lang$core$Random$pair,
+			A2(_elm_lang$core$Random$int, 0, _ryan_senn$snekk$Config$gridSize),
+			A2(_elm_lang$core$Random$int, 0, _ryan_senn$snekk$Config$gridSize)));
+};
+var _ryan_senn$snekk$Update$generateFood = function (gameState) {
+	return A2(
+		_elm_lang$core$Random$generate,
+		_ryan_senn$snekk$Msg$SetFood,
+		_ryan_senn$snekk$Update$foodGenerator(gameState));
+};
 var _ryan_senn$snekk$Update$update = F2(
 	function (msg, model) {
-		var _p7 = msg;
-		switch (_p7.ctor) {
+		var _p12 = msg;
+		switch (_p12.ctor) {
 			case 'StartGame':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -15991,13 +16037,7 @@ var _ryan_senn$snekk$Update$update = F2(
 						{gameState: _ryan_senn$snekk$Model$Loading}),
 					{
 						ctor: '::',
-						_0: A2(
-							_elm_lang$core$Random$generate,
-							_ryan_senn$snekk$Msg$SetFood,
-							A2(
-								_elm_lang$core$Random$pair,
-								A2(_elm_lang$core$Random$int, 5, _ryan_senn$snekk$Model$gridSize),
-								A2(_elm_lang$core$Random$int, 5, _ryan_senn$snekk$Model$gridSize))),
+						_0: _ryan_senn$snekk$Update$generateFood(model.gameState),
 						_1: {ctor: '[]'}
 					});
 			case 'SetFood':
@@ -16006,22 +16046,31 @@ var _ryan_senn$snekk$Update$update = F2(
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							gameState: A2(_ryan_senn$snekk$Update$setFood, model.gameState, _p7._0)
+							gameState: A2(_ryan_senn$snekk$Update$setFood, model.gameState, _p12._0)
 						}),
 					{ctor: '[]'});
 			case 'Tick':
-				var _p8 = model.gameState;
-				if (_p8.ctor === 'Started') {
-					var _p10 = _p8._0;
-					var newSnekk = A2(_ryan_senn$snekk$Update$move, _p10.direction, _p10.snekk);
-					var _p9 = _ryan_senn$snekk$Update$isOutOfBoundaries(
-						_mgold$elm_nonempty_list$List_Nonempty$head(newSnekk));
-					if (_p9 === true) {
+				var _p13 = model.gameState;
+				if (_p13.ctor === 'Started') {
+					var _p15 = _p13._0;
+					var newSnekk = A2(_ryan_senn$snekk$Update$move, _p15.desiredDirection, _p15.snekk);
+					var _p14 = _ryan_senn$snekk$Update$isOutOfBoundaries(
+						_mgold$elm_nonempty_list$List_Nonempty$head(newSnekk)) || A2(
+						_mgold$elm_nonempty_list$List_Nonempty$member,
+						_mgold$elm_nonempty_list$List_Nonempty$head(newSnekk),
+						_mgold$elm_nonempty_list$List_Nonempty$pop(newSnekk));
+					if (_p14 === true) {
 						return A2(
 							_elm_lang$core$Platform_Cmd_ops['!'],
 							_elm_lang$core$Native_Utils.update(
 								model,
-								{gameState: _ryan_senn$snekk$Model$GameOver}),
+								{
+									gameState: _ryan_senn$snekk$Model$GameOver(
+										_mgold$elm_nonempty_list$List_Nonempty$length(newSnekk) - 3),
+									highestScore: (_elm_lang$core$Native_Utils.cmp(
+										_mgold$elm_nonempty_list$List_Nonempty$length(newSnekk),
+										model.highestScore) > 0) ? (_mgold$elm_nonempty_list$List_Nonempty$length(newSnekk) - 3) : model.highestScore
+								}),
 							{ctor: '[]'});
 					} else {
 						return A2(
@@ -16031,29 +16080,24 @@ var _ryan_senn$snekk$Update$update = F2(
 								{
 									gameState: _ryan_senn$snekk$Model$Started(
 										_elm_lang$core$Native_Utils.update(
-											_p10,
+											_p15,
 											{
 												snekk: _elm_lang$core$Native_Utils.eq(
 													_mgold$elm_nonempty_list$List_Nonempty$head(newSnekk),
-													_p10.food) ? A2(
+													_p15.food) ? A2(
 													_mgold$elm_nonempty_list$List_Nonempty$append,
 													newSnekk,
 													_mgold$elm_nonempty_list$List_Nonempty$fromElement(
 														_mgold$elm_nonempty_list$List_Nonempty$head(
-															_mgold$elm_nonempty_list$List_Nonempty$reverse(newSnekk)))) : newSnekk
+															_mgold$elm_nonempty_list$List_Nonempty$reverse(newSnekk)))) : newSnekk,
+												lastTickDirection: _p15.desiredDirection
 											}))
 								}),
 							{
 								ctor: '::',
 								_0: _elm_lang$core$Native_Utils.eq(
 									_mgold$elm_nonempty_list$List_Nonempty$head(newSnekk),
-									_p10.food) ? A2(
-									_elm_lang$core$Random$generate,
-									_ryan_senn$snekk$Msg$SetFood,
-									A2(
-										_elm_lang$core$Random$pair,
-										A2(_elm_lang$core$Random$int, 5, _ryan_senn$snekk$Model$gridSize),
-										A2(_elm_lang$core$Random$int, 5, _ryan_senn$snekk$Model$gridSize))) : _elm_lang$core$Platform_Cmd$none,
+									_p15.food) ? _ryan_senn$snekk$Update$generateFood(model.gameState) : _elm_lang$core$Platform_Cmd$none,
 								_1: {ctor: '[]'}
 							});
 					}
@@ -16064,28 +16108,28 @@ var _ryan_senn$snekk$Update$update = F2(
 						{ctor: '[]'});
 				}
 			default:
-				var _p14 = _p7._0;
-				var _p11 = model.gameState;
-				if (_p11.ctor === 'Started') {
-					var _p13 = _p11._0;
-					var _p12 = {
+				var _p19 = _p12._0;
+				var _p16 = model.gameState;
+				if (_p16.ctor === 'Started') {
+					var _p18 = _p16._0;
+					var _p17 = {
 						ctor: '_Tuple2',
-						_0: _ryan_senn$snekk$Update$keyCodeDirection(_p14),
+						_0: _ryan_senn$snekk$Update$keyCodeDirection(_p19),
 						_1: _elm_lang$core$Native_Utils.eq(
 							_elm_lang$core$Maybe$Just(
-								_ryan_senn$snekk$Model$oppositeDirection(_p13.direction)),
-							_ryan_senn$snekk$Update$keyCodeDirection(_p14))
+								_ryan_senn$snekk$Direction$oppositeDirection(_p18.lastTickDirection)),
+							_ryan_senn$snekk$Update$keyCodeDirection(_p19))
 					};
-					_v8_2:
+					_v9_2:
 					do {
-						if (_p12.ctor === '_Tuple2') {
-							if (_p12._1 === true) {
+						if (_p17.ctor === '_Tuple2') {
+							if (_p17._1 === true) {
 								return A2(
 									_elm_lang$core$Platform_Cmd_ops['!'],
 									model,
 									{ctor: '[]'});
 							} else {
-								if (_p12._0.ctor === 'Just') {
+								if (_p17._0.ctor === 'Just') {
 									return A2(
 										_elm_lang$core$Platform_Cmd_ops['!'],
 										_elm_lang$core$Native_Utils.update(
@@ -16093,16 +16137,16 @@ var _ryan_senn$snekk$Update$update = F2(
 											{
 												gameState: _ryan_senn$snekk$Model$Started(
 													_elm_lang$core$Native_Utils.update(
-														_p13,
-														{direction: _p12._0._0}))
+														_p18,
+														{desiredDirection: _p17._0._0}))
 											}),
 										{ctor: '[]'});
 								} else {
-									break _v8_2;
+									break _v9_2;
 								}
 							}
 						} else {
-							break _v8_2;
+							break _v9_2;
 						}
 					} while(false);
 					return A2(
@@ -16128,11 +16172,11 @@ var _ryan_senn$snekk$Styles$square = F2(
 				_1: {
 					ctor: '::',
 					_0: _rtfeldman$elm_css$Css$width(
-						_rtfeldman$elm_css$Css$rem(1)),
+						_rtfeldman$elm_css$Css$rem(1.5)),
 					_1: {
 						ctor: '::',
 						_0: _rtfeldman$elm_css$Css$height(
-							_rtfeldman$elm_css$Css$rem(1)),
+							_rtfeldman$elm_css$Css$rem(1.5)),
 						_1: {
 							ctor: '::',
 							_0: A3(
@@ -16182,35 +16226,48 @@ var _ryan_senn$snekk$Styles$layout = _rtfeldman$elm_css$Html_Styled_Attributes$c
 		}
 	});
 
-var _ryan_senn$snekk$View$gameOver = A2(
-	_rtfeldman$elm_css$Html_Styled$div,
-	{ctor: '[]'},
-	{
-		ctor: '::',
-		_0: A2(
+var _ryan_senn$snekk$View$gameOver = F2(
+	function (highestScore, score) {
+		return A2(
 			_rtfeldman$elm_css$Html_Styled$div,
 			{ctor: '[]'},
 			{
 				ctor: '::',
-				_0: _rtfeldman$elm_css$Html_Styled$text('Game Over :('),
-				_1: {ctor: '[]'}
-			}),
-		_1: {
-			ctor: '::',
-			_0: A2(
-				_rtfeldman$elm_css$Html_Styled$button,
-				{
+				_0: A2(
+					_rtfeldman$elm_css$Html_Styled$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _rtfeldman$elm_css$Html_Styled$text(
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'Game Over! Score: ',
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$core$Basics$toString(score),
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										' Highest Score: ',
+										_elm_lang$core$Basics$toString(highestScore))))),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
 					ctor: '::',
-					_0: _rtfeldman$elm_css$Html_Styled_Events$onClick(_ryan_senn$snekk$Msg$StartGame),
+					_0: A2(
+						_rtfeldman$elm_css$Html_Styled$button,
+						{
+							ctor: '::',
+							_0: _rtfeldman$elm_css$Html_Styled_Events$onClick(_ryan_senn$snekk$Msg$StartGame),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _rtfeldman$elm_css$Html_Styled$text('Try Again!'),
+							_1: {ctor: '[]'}
+						}),
 					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _rtfeldman$elm_css$Html_Styled$text('Try Again!'),
-					_1: {ctor: '[]'}
-				}),
-			_1: {ctor: '[]'}
-		}
+				}
+			});
 	});
 var _ryan_senn$snekk$View$square = F2(
 	function (gameModel, coord) {
@@ -16241,24 +16298,70 @@ var _ryan_senn$snekk$View$row = F2(
 					return A2(
 						_ryan_senn$snekk$View$square,
 						gameModel,
-						A2(_ryan_senn$snekk$Model$Coord, x, y));
+						A2(_ryan_senn$snekk$Coord$Coord, x, y));
 				},
-				A2(_elm_lang$core$List$range, 0, _ryan_senn$snekk$Model$gridSize)));
+				A2(_elm_lang$core$List$range, 0, _ryan_senn$snekk$Config$gridSize)));
 	});
-var _ryan_senn$snekk$View$game = function (gameModel) {
-	return A2(
-		_rtfeldman$elm_css$Html_Styled$div,
-		{
-			ctor: '::',
-			_0: _ryan_senn$snekk$Styles$grid,
-			_1: {ctor: '[]'}
-		},
-		A2(
-			_elm_lang$core$List$map,
-			_ryan_senn$snekk$View$row(gameModel),
-			_elm_lang$core$List$reverse(
-				A2(_elm_lang$core$List$range, 0, _ryan_senn$snekk$Model$gridSize))));
-};
+var _ryan_senn$snekk$View$game = F2(
+	function (highestScore, gameModel) {
+		return A2(
+			_rtfeldman$elm_css$Html_Styled$div,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_rtfeldman$elm_css$Html_Styled$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_rtfeldman$elm_css$Html_Styled$div,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _rtfeldman$elm_css$Html_Styled$text(
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										'Score: ',
+										_elm_lang$core$Basics$toString(
+											_mgold$elm_nonempty_list$List_Nonempty$length(gameModel.snekk) - 3))),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_rtfeldman$elm_css$Html_Styled$div,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Html_Styled$text(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'Highest Score: ',
+											_elm_lang$core$Basics$toString(highestScore))),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_rtfeldman$elm_css$Html_Styled$div,
+						{
+							ctor: '::',
+							_0: _ryan_senn$snekk$Styles$grid,
+							_1: {ctor: '[]'}
+						},
+						A2(
+							_elm_lang$core$List$map,
+							_ryan_senn$snekk$View$row(gameModel),
+							_elm_lang$core$List$reverse(
+								A2(_elm_lang$core$List$range, 0, _ryan_senn$snekk$Config$gridSize)))),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
 var _ryan_senn$snekk$View$loading = A2(
 	_rtfeldman$elm_css$Html_Styled$div,
 	{ctor: '[]'},
@@ -16304,9 +16407,9 @@ var _ryan_senn$snekk$View$view = function (model) {
 					case 'Loading':
 						return _ryan_senn$snekk$View$loading;
 					case 'Started':
-						return _ryan_senn$snekk$View$game(_p0._0);
+						return A2(_ryan_senn$snekk$View$game, model.highestScore, _p0._0);
 					default:
-						return _ryan_senn$snekk$View$gameOver;
+						return A2(_ryan_senn$snekk$View$gameOver, model.highestScore, _p0._0);
 				}
 			}(),
 			_1: {ctor: '[]'}
@@ -16326,7 +16429,7 @@ var _ryan_senn$snekk$Subs$ticks = function (gameState) {
 	if (_p1.ctor === 'Started') {
 		return A2(
 			_elm_lang$core$Time$every,
-			_ryan_senn$snekk$Model$speed,
+			_ryan_senn$snekk$Config$speed,
 			_elm_lang$core$Basics$always(_ryan_senn$snekk$Msg$Tick));
 	} else {
 		return _elm_lang$core$Platform_Sub$none;
