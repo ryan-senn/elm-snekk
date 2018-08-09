@@ -18,18 +18,27 @@ view : Model -> Html Msg
 view model =
     div
         [ Css.layout ]
-        [ case model.gameState of
-            Model.NotStarted ->
-                notStarted
+        [ h1
+            []
+            [ text "Snake Game in Elm" ]
+        , a
+            [ Css.github, href "https://github.com/ryan-senn/elm-snekk", target "_blank" ]
+            [ text "Source Code on Github" ]
+        , div
+            []
+            [ case model.gameState of
+                Model.NotStarted ->
+                    notStarted
 
-            Model.Loading ->
-                loading
+                Model.Loading ->
+                    loading
 
-            Model.Started gameModel ->
-                game model.highestScore gameModel
+                Model.Started gameModel ->
+                    game model.highestScore gameModel
 
-            Model.GameOver score ->
-                gameOver model.highestScore score
+                Model.GameOver score ->
+                    gameOver model.highestScore score
+            ]
         ]
 
 
@@ -38,8 +47,8 @@ notStarted =
     div
         []
         [ button
-            [ onClick Msg.StartGame ]
-            [ text "Start Game!" ]
+            [ Css.button, onClick Msg.StartGame ]
+            [ text "Start Game! (Or press Space)" ]
         ]
 
 
@@ -56,13 +65,13 @@ game highestScore gameModel =
     div
         []
         [ div
-            []
+            [ Css.score ]
             [ div
                 []
-                [ text <| "Score: " ++ toString (Nonempty.length gameModel.snekk - 3) ]
+                [ text <| "Highest Score: " ++ toString highestScore ]
             , div
                 []
-                [ text <| "Highest Score: " ++ toString highestScore ]
+                [ text <| "Score: " ++ toString (Nonempty.length gameModel.snekk - 3) ]
             ]
         , div
             [ Css.grid ]
@@ -87,11 +96,11 @@ square gameModel coord =
 gameOver : Int -> Int -> Html Msg
 gameOver highestScore score =
     div
-        []
+        [ Css.gameOver ]
         [ div
             []
             [ text <| "Game Over! Score: " ++ toString score ++ " Highest Score: " ++ toString highestScore ]
         , button
-            [ onClick Msg.StartGame ]
-            [ text "Try Again!" ]
+            [ Css.button, Css.tryAgain, onClick Msg.StartGame ]
+            [ text "Try Again! (Or press Space)" ]
         ]

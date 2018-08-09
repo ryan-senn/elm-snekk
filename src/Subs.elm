@@ -14,6 +14,7 @@ subscriptions model =
     Sub.batch
         [ ticks model.gameState
         , setDirection model.gameState
+        , startGame model.gameState
         ]
 
 
@@ -32,6 +33,19 @@ setDirection gameState =
     case gameState of
         Model.Started _ ->
             Keyboard.downs SetDirection
+
+        _ ->
+            Sub.none
+
+
+startGame : Model.GameState -> Sub Msg
+startGame gameState =
+    case gameState of
+        Model.NotStarted ->
+            Keyboard.downs StartGamePress
+
+        Model.GameOver _ ->
+            Keyboard.downs StartGamePress
 
         _ ->
             Sub.none

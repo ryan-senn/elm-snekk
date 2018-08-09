@@ -15970,6 +15970,9 @@ var _ryan_senn$snekk$Msg$Tick = {ctor: 'Tick'};
 var _ryan_senn$snekk$Msg$SetFood = function (a) {
 	return {ctor: 'SetFood', _0: a};
 };
+var _ryan_senn$snekk$Msg$StartGamePress = function (a) {
+	return {ctor: 'StartGamePress', _0: a};
+};
 var _ryan_senn$snekk$Msg$StartGame = {ctor: 'StartGame'};
 
 var _ryan_senn$snekk$Update$setDirection = F2(
@@ -16095,6 +16098,25 @@ var _ryan_senn$snekk$Update$update = F2(
 						_0: _ryan_senn$snekk$Update$generateFood(model.gameState),
 						_1: {ctor: '[]'}
 					});
+			case 'StartGamePress':
+				var _p9 = _p8._0;
+				if (_p9 === 32) {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{gameState: _ryan_senn$snekk$Model$Loading}),
+						{
+							ctor: '::',
+							_0: _ryan_senn$snekk$Update$generateFood(model.gameState),
+							_1: {ctor: '[]'}
+						});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
+				}
 			case 'SetFood':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -16106,42 +16128,67 @@ var _ryan_senn$snekk$Update$update = F2(
 						}),
 					{ctor: '[]'});
 			case 'Tick':
-				var _p9 = model.gameState;
-				if (_p9.ctor === 'Started') {
-					return A2(_ryan_senn$snekk$Update$tick, model, _p9._0);
+				var _p10 = model.gameState;
+				if (_p10.ctor === 'Started') {
+					return A2(_ryan_senn$snekk$Update$tick, model, _p10._0);
 				} else {
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Update',
 						{
-							start: {line: 28, column: 13},
-							end: {line: 33, column: 80}
+							start: {line: 36, column: 13},
+							end: {line: 41, column: 80}
 						},
-						_p9)('No ticks subscription if game is not started.');
+						_p10)('No ticks subscription if game is not started.');
 				}
 			default:
-				var _p11 = model.gameState;
-				if (_p11.ctor === 'Started') {
+				var _p12 = model.gameState;
+				if (_p12.ctor === 'Started') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
 								gameState: _ryan_senn$snekk$Model$Started(
-									A2(_ryan_senn$snekk$Update$setDirection, _p8._0, _p11._0))
+									A2(_ryan_senn$snekk$Update$setDirection, _p8._0, _p12._0))
 							}),
 						{ctor: '[]'});
 				} else {
 					return _elm_lang$core$Native_Utils.crashCase(
 						'Update',
 						{
-							start: {line: 36, column: 13},
-							end: {line: 41, column: 84}
+							start: {line: 44, column: 13},
+							end: {line: 49, column: 84}
 						},
-						_p11)('No direction subscription if game is not started.');
+						_p12)('No direction subscription if game is not started.');
 				}
 		}
 	});
 
+var _ryan_senn$snekk$Styles$tryAgain = _rtfeldman$elm_css$Html_Styled_Attributes$css(
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$marginTop(
+			_rtfeldman$elm_css$Css$rem(1)),
+		_1: {ctor: '[]'}
+	});
+var _ryan_senn$snekk$Styles$gameOver = _rtfeldman$elm_css$Html_Styled_Attributes$css(
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$displayFlex,
+		_1: {
+			ctor: '::',
+			_0: _rtfeldman$elm_css$Css$alignItems(_rtfeldman$elm_css$Css$center),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$justifyContent(_rtfeldman$elm_css$Css$center),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	});
 var _ryan_senn$snekk$Styles$square = F2(
 	function (isSnekk, isFood) {
 		return _rtfeldman$elm_css$Html_Styled_Attributes$css(
@@ -16181,6 +16228,19 @@ var _ryan_senn$snekk$Styles$row = _rtfeldman$elm_css$Html_Styled_Attributes$css(
 		_0: _rtfeldman$elm_css$Css$displayFlex,
 		_1: {ctor: '[]'}
 	});
+var _ryan_senn$snekk$Styles$score = _rtfeldman$elm_css$Html_Styled_Attributes$css(
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$textAlign(_rtfeldman$elm_css$Css$right),
+		_1: {ctor: '[]'}
+	});
+var _ryan_senn$snekk$Styles$github = _rtfeldman$elm_css$Html_Styled_Attributes$css(
+	{
+		ctor: '::',
+		_0: _rtfeldman$elm_css$Css$marginBottom(
+			_rtfeldman$elm_css$Css$rem(2)),
+		_1: {ctor: '[]'}
+	});
 var _ryan_senn$snekk$Styles$grid = _rtfeldman$elm_css$Html_Styled_Attributes$css(
 	{
 		ctor: '::',
@@ -16188,7 +16248,41 @@ var _ryan_senn$snekk$Styles$grid = _rtfeldman$elm_css$Html_Styled_Attributes$css
 		_1: {
 			ctor: '::',
 			_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: A3(
+					_rtfeldman$elm_css$Css$border3,
+					_rtfeldman$elm_css$Css$px(1),
+					_rtfeldman$elm_css$Css$solid,
+					_rtfeldman$elm_css$Css$hex('cccccc')),
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _ryan_senn$snekk$Styles$button = _rtfeldman$elm_css$Html_Styled_Attributes$css(
+	{
+		ctor: '::',
+		_0: A3(
+			_rtfeldman$elm_css$Css$border3,
+			_rtfeldman$elm_css$Css$px(1),
+			_rtfeldman$elm_css$Css$solid,
+			_rtfeldman$elm_css$Css$hex('999999')),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_rtfeldman$elm_css$Css$padding2,
+				_rtfeldman$elm_css$Css$rem(0.4),
+				_rtfeldman$elm_css$Css$rem(0.8)),
+			_1: {
+				ctor: '::',
+				_0: _rtfeldman$elm_css$Css$borderRadius(
+					_rtfeldman$elm_css$Css$px(2)),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$cursor(_rtfeldman$elm_css$Css$pointer),
+					_1: {ctor: '[]'}
+				}
+			}
 		}
 	});
 var _ryan_senn$snekk$Styles$layout = _rtfeldman$elm_css$Html_Styled_Attributes$css(
@@ -16197,11 +16291,15 @@ var _ryan_senn$snekk$Styles$layout = _rtfeldman$elm_css$Html_Styled_Attributes$c
 		_0: _rtfeldman$elm_css$Css$displayFlex,
 		_1: {
 			ctor: '::',
-			_0: _rtfeldman$elm_css$Css$justifyContent(_rtfeldman$elm_css$Css$center),
+			_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
 			_1: {
 				ctor: '::',
-				_0: _rtfeldman$elm_css$Css$alignItems(_rtfeldman$elm_css$Css$center),
-				_1: {ctor: '[]'}
+				_0: _rtfeldman$elm_css$Css$justifyContent(_rtfeldman$elm_css$Css$center),
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Css$alignItems(_rtfeldman$elm_css$Css$center),
+					_1: {ctor: '[]'}
+				}
 			}
 		}
 	});
@@ -16210,7 +16308,11 @@ var _ryan_senn$snekk$View$gameOver = F2(
 	function (highestScore, score) {
 		return A2(
 			_rtfeldman$elm_css$Html_Styled$div,
-			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _ryan_senn$snekk$Styles$gameOver,
+				_1: {ctor: '[]'}
+			},
 			{
 				ctor: '::',
 				_0: A2(
@@ -16237,12 +16339,20 @@ var _ryan_senn$snekk$View$gameOver = F2(
 						_rtfeldman$elm_css$Html_Styled$button,
 						{
 							ctor: '::',
-							_0: _rtfeldman$elm_css$Html_Styled_Events$onClick(_ryan_senn$snekk$Msg$StartGame),
-							_1: {ctor: '[]'}
+							_0: _ryan_senn$snekk$Styles$button,
+							_1: {
+								ctor: '::',
+								_0: _ryan_senn$snekk$Styles$tryAgain,
+								_1: {
+									ctor: '::',
+									_0: _rtfeldman$elm_css$Html_Styled_Events$onClick(_ryan_senn$snekk$Msg$StartGame),
+									_1: {ctor: '[]'}
+								}
+							}
 						},
 						{
 							ctor: '::',
-							_0: _rtfeldman$elm_css$Html_Styled$text('Try Again!'),
+							_0: _rtfeldman$elm_css$Html_Styled$text('Try Again! (Or press Space)'),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
@@ -16291,7 +16401,11 @@ var _ryan_senn$snekk$View$game = F2(
 				ctor: '::',
 				_0: A2(
 					_rtfeldman$elm_css$Html_Styled$div,
-					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _ryan_senn$snekk$Styles$score,
+						_1: {ctor: '[]'}
+					},
 					{
 						ctor: '::',
 						_0: A2(
@@ -16302,9 +16416,8 @@ var _ryan_senn$snekk$View$game = F2(
 								_0: _rtfeldman$elm_css$Html_Styled$text(
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										'Score: ',
-										_elm_lang$core$Basics$toString(
-											_mgold$elm_nonempty_list$List_Nonempty$length(gameModel.snekk) - 3))),
+										'Highest Score: ',
+										_elm_lang$core$Basics$toString(highestScore))),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -16317,8 +16430,9 @@ var _ryan_senn$snekk$View$game = F2(
 									_0: _rtfeldman$elm_css$Html_Styled$text(
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											'Highest Score: ',
-											_elm_lang$core$Basics$toString(highestScore))),
+											'Score: ',
+											_elm_lang$core$Basics$toString(
+												_mgold$elm_nonempty_list$List_Nonempty$length(gameModel.snekk) - 3))),
 									_1: {ctor: '[]'}
 								}),
 							_1: {ctor: '[]'}
@@ -16359,12 +16473,16 @@ var _ryan_senn$snekk$View$notStarted = A2(
 			_rtfeldman$elm_css$Html_Styled$button,
 			{
 				ctor: '::',
-				_0: _rtfeldman$elm_css$Html_Styled_Events$onClick(_ryan_senn$snekk$Msg$StartGame),
-				_1: {ctor: '[]'}
+				_0: _ryan_senn$snekk$Styles$button,
+				_1: {
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Html_Styled_Events$onClick(_ryan_senn$snekk$Msg$StartGame),
+					_1: {ctor: '[]'}
+				}
 			},
 			{
 				ctor: '::',
-				_0: _rtfeldman$elm_css$Html_Styled$text('Start Game!'),
+				_0: _rtfeldman$elm_css$Html_Styled$text('Start Game! (Or press Space)'),
 				_1: {ctor: '[]'}
 			}),
 		_1: {ctor: '[]'}
@@ -16379,34 +16497,86 @@ var _ryan_senn$snekk$View$view = function (model) {
 		},
 		{
 			ctor: '::',
-			_0: function () {
-				var _p0 = model.gameState;
-				switch (_p0.ctor) {
-					case 'NotStarted':
-						return _ryan_senn$snekk$View$notStarted;
-					case 'Loading':
-						return _ryan_senn$snekk$View$loading;
-					case 'Started':
-						return A2(_ryan_senn$snekk$View$game, model.highestScore, _p0._0);
-					default:
-						return A2(_ryan_senn$snekk$View$gameOver, model.highestScore, _p0._0);
+			_0: A2(
+				_rtfeldman$elm_css$Html_Styled$h1,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _rtfeldman$elm_css$Html_Styled$text('Snake Game in Elm'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_rtfeldman$elm_css$Html_Styled$a,
+					{
+						ctor: '::',
+						_0: _ryan_senn$snekk$Styles$github,
+						_1: {
+							ctor: '::',
+							_0: _rtfeldman$elm_css$Html_Styled_Attributes$href('https://github.com/ryan-senn/elm-snekk'),
+							_1: {
+								ctor: '::',
+								_0: _rtfeldman$elm_css$Html_Styled_Attributes$target('_blank'),
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					{
+						ctor: '::',
+						_0: _rtfeldman$elm_css$Html_Styled$text('Source Code on Github'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_rtfeldman$elm_css$Html_Styled$div,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: function () {
+								var _p0 = model.gameState;
+								switch (_p0.ctor) {
+									case 'NotStarted':
+										return _ryan_senn$snekk$View$notStarted;
+									case 'Loading':
+										return _ryan_senn$snekk$View$loading;
+									case 'Started':
+										return A2(_ryan_senn$snekk$View$game, model.highestScore, _p0._0);
+									default:
+										return A2(_ryan_senn$snekk$View$gameOver, model.highestScore, _p0._0);
+								}
+							}(),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
 				}
-			}(),
-			_1: {ctor: '[]'}
+			}
 		});
 };
 
-var _ryan_senn$snekk$Subs$setDirection = function (gameState) {
+var _ryan_senn$snekk$Subs$startGame = function (gameState) {
 	var _p0 = gameState;
-	if (_p0.ctor === 'Started') {
+	switch (_p0.ctor) {
+		case 'NotStarted':
+			return _elm_lang$keyboard$Keyboard$downs(_ryan_senn$snekk$Msg$StartGamePress);
+		case 'GameOver':
+			return _elm_lang$keyboard$Keyboard$downs(_ryan_senn$snekk$Msg$StartGamePress);
+		default:
+			return _elm_lang$core$Platform_Sub$none;
+	}
+};
+var _ryan_senn$snekk$Subs$setDirection = function (gameState) {
+	var _p1 = gameState;
+	if (_p1.ctor === 'Started') {
 		return _elm_lang$keyboard$Keyboard$downs(_ryan_senn$snekk$Msg$SetDirection);
 	} else {
 		return _elm_lang$core$Platform_Sub$none;
 	}
 };
 var _ryan_senn$snekk$Subs$ticks = function (gameState) {
-	var _p1 = gameState;
-	if (_p1.ctor === 'Started') {
+	var _p2 = gameState;
+	if (_p2.ctor === 'Started') {
 		return A2(
 			_elm_lang$core$Time$every,
 			_ryan_senn$snekk$Config$speed,
@@ -16423,7 +16593,11 @@ var _ryan_senn$snekk$Subs$subscriptions = function (model) {
 			_1: {
 				ctor: '::',
 				_0: _ryan_senn$snekk$Subs$setDirection(model.gameState),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _ryan_senn$snekk$Subs$startGame(model.gameState),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };

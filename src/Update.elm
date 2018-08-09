@@ -21,6 +21,14 @@ update msg model =
         StartGame ->
             { model | gameState = Model.Loading } ! [ generateFood model.gameState ]
 
+        StartGamePress keyCode ->
+            case keyCode of
+                32 ->
+                    { model | gameState = Model.Loading } ! [ generateFood model.gameState ]
+
+                _ ->
+                    model ! []
+
         SetFood foodCoord ->
             { model | gameState = Model.Started <| setFood model.gameState foodCoord } ! []
 
