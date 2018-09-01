@@ -1,13 +1,11 @@
-module Msg exposing (Msg (..))
-
-import Keyboard
+module Msg exposing (Msg(..))
 
 import Coord exposing (Coord)
+import Direction exposing (Direction)
 
 
 type Msg
     = StartGame
-    | StartGamePress Keyboard.KeyCode
     | SetFood Coord
     | Tick
-    | SetDirection Keyboard.KeyCode
+    | SetDirection Direction

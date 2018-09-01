@@ -1,4 +1,6 @@
-module Direction exposing (Direction (..), oppositeDirection, fromKeyCode)
+module Direction exposing (Direction(..), decoder, oppositeDirection)
+
+import Json.Decode as Decode exposing (Decoder)
 
 
 type Direction
@@ -11,17 +13,39 @@ type Direction
 oppositeDirection : Direction -> Direction
 oppositeDirection direction =
     case direction of
-        North -> South
-        East -> West
-        South -> North
-        West -> East
+        North ->
+            South
+
+        East ->
+            West
+
+        South ->
+            North
+
+        West ->
+            East
 
 
-fromKeyCode : Int -> Maybe Direction
-fromKeyCode keyCode =
-    case keyCode of
-        38 -> Just North
-        39 -> Just East
-        40 -> Just South
-        37 -> Just West
-        _  -> Nothing
+decoder : Decoder Direction
+decoder =
+    Decode.field "key" Decode.string
+        |> Decode.andThen decodeDirection
+
+
+decodeDirection : String -> Decoder Direction
+decodeDirection key =
+    case key of
+        "ArrowTop" ->
+            Decode.succeed North
+
+        "ArrowRight" ->
+            Decode.succeed East
+
+        "ArrowBottom" ->
+            Decode.succeed South
+
+        "ArrowLeft" ->
+            Decode.succeed West
+
+        _ ->
+            Decode.fail "Not a valid Direction key."

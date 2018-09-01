@@ -1,12 +1,12 @@
 module Subs exposing (subscriptions)
 
-import Time
-import Keyboard
-
-import Msg exposing (Msg (..))
-import Model exposing (Model)
-
+import Browser.Events as Events
 import Config
+import Direction
+import Json.Decode as Decode exposing (Decoder)
+import Model exposing (Model)
+import Msg exposing (Msg(..))
+import Time
 
 
 subscriptions : Model -> Sub Msg
@@ -32,7 +32,7 @@ setDirection : Model.GameState -> Sub Msg
 setDirection gameState =
     case gameState of
         Model.Started _ ->
-            Keyboard.downs SetDirection
+            Events.onKeyDown <| Decode.map Msg.SetDirection Direction.decoder
 
         _ ->
             Sub.none
@@ -42,10 +42,23 @@ startGame : Model.GameState -> Sub Msg
 startGame gameState =
     case gameState of
         Model.NotStarted ->
-            Keyboard.downs StartGamePress
+            Events.onKeyDown startGameDecoder
 
         Model.GameOver _ ->
-            Keyboard.downs StartGamePress
+            Events.onKeyDown startGameDecoder
 
         _ ->
             Sub.none
+
+
+startGameDecoder : Decoder Msg
+startGameDecoder =
+    Decode.field "key" Decode.string
+        |> Decode.andThen
+            (\key ->
+                if key == "Space" then
+                    Decode.succeed StartGame
+
+                else
+                    Decode.fail "Not a valid StartGame key."
+            )

@@ -1,11 +1,10 @@
-module Styles exposing (..)
+module Styles exposing (button, gameOver, github, grid, layout, row, score, square, tryAgain)
 
 import Css exposing (..)
 import Html.Styled exposing (Attribute)
 import Html.Styled.Attributes exposing (css)
-
-import Msg exposing (Msg)
 import Model
+import Msg exposing (Msg)
 
 
 layout : Attribute Msg
@@ -65,7 +64,15 @@ square isSnekk isFood =
         , width <| Css.rem 1.5
         , height <| Css.rem 1.5
         , border3 (px 1) solid (hex "efefef")
-        , backgroundColor <| if isSnekk then hex "cccccc" else if isFood then hex "666666" else hex "ffffff"
+        , backgroundColor <|
+            if isSnekk then
+                hex "cccccc"
+
+            else if isFood then
+                hex "666666"
+
+            else
+                hex "ffffff"
         ]
 
 

@@ -1,19 +1,27 @@
-import Html exposing (program)
+module Main exposing (main)
 
+import Browser
 import Html.Styled as Html
-
+import Model exposing (Model, initialModel)
+import Msg exposing (Msg)
+import Subs exposing (subscriptions)
 import Update exposing (update)
 import View exposing (view)
-import Msg exposing (Msg)
-import Model exposing (Model, initialModel)
-import Subs exposing (subscriptions)
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    program
-        { init = initialModel ! []
+    Browser.document
+        { init =
+            always
+                ( initialModel
+                , Cmd.none
+                )
         , update = update
         , subscriptions = subscriptions
-        , view = view >> Html.toUnstyled
+        , view =
+            \model ->
+                { title = "Snekk Game in Elm"
+                , body = [ view model |> Html.toUnstyled ]
+                }
         }

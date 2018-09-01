@@ -1,17 +1,14 @@
 module View exposing (view)
 
-import Styles as Css
-import Html.Styled exposing (..)
-import Html.Styled.Events exposing (..)
-import Html.Styled.Attributes exposing (..)
-
-import List.Nonempty as Nonempty
-
-import Msg exposing (Msg)
-import Model exposing (Model)
-
 import Config
 import Coord exposing (Coord)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Html.Styled.Events exposing (..)
+import List.Nonempty as Nonempty
+import Model exposing (Model)
+import Msg exposing (Msg)
+import Styles as Css
 
 
 view : Model -> Html Msg
@@ -68,14 +65,14 @@ game highestScore gameModel =
             [ Css.score ]
             [ div
                 []
-                [ text <| "Highest Score: " ++ toString highestScore ]
+                [ text <| "Highest Score: " ++ String.fromInt highestScore ]
             , div
                 []
-                [ text <| "Score: " ++ toString (Nonempty.length gameModel.snekk - 3) ]
+                [ text <| "Score: " ++ String.fromInt (Nonempty.length gameModel.snekk - 3) ]
             ]
         , div
             [ Css.grid ]
-            ( List.map (row gameModel) (List.range 0 Config.gridSize |> List.reverse) )
+            (List.map (row gameModel) (List.range 0 Config.gridSize |> List.reverse))
         ]
 
 
@@ -83,7 +80,7 @@ row : Model.GameModel -> Int -> Html Msg
 row gameModel y =
     div
         [ Css.row ]
-        ( List.map (\x -> square gameModel <| Coord x y) (List.range 0 Config.gridSize) )
+        (List.map (\x -> square gameModel <| Coord x y) (List.range 0 Config.gridSize))
 
 
 square : Model.GameModel -> Coord -> Html Msg
@@ -99,7 +96,7 @@ gameOver highestScore score =
         [ Css.gameOver ]
         [ div
             []
-            [ text <| "Game Over! Score: " ++ toString score ++ " Highest Score: " ++ toString highestScore ]
+            [ text <| "Game Over! Score: " ++ String.fromInt score ++ " Highest Score: " ++ String.fromInt highestScore ]
         , button
             [ Css.button, Css.tryAgain, onClick Msg.StartGame ]
             [ text "Try Again! (Or press Space)" ]

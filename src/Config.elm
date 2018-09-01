@@ -1,6 +1,4 @@
-module Config exposing (gridSize, speed, isOutOfBoundaries)
-
-import Time exposing (Time)
+module Config exposing (gridSize, isOutOfBoundaries, speed)
 
 import Coord exposing (Coord)
 
@@ -10,9 +8,9 @@ gridSize =
     12
 
 
-speed : Time
+speed : Float
 speed =
-    Time.millisecond * 200
+    200
 
 
 isOutOfBoundaries : Coord -> Bool

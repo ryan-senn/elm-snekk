@@ -1,11 +1,14 @@
 module Model exposing
-    ( Model, initialModel
-    , GameState (..), GameModel, initialGameModel
+    ( GameModel
+    , GameState(..)
+    , Model
+    , initialGameModel
+    , initialModel
     )
 
-import Snekk exposing (Snekk, initialSnekk)
-import Direction exposing (Direction (East))
 import Coord exposing (Coord)
+import Direction exposing (Direction(..))
+import Snekk exposing (Snekk, initialSnekk)
 
 
 type alias Model =
