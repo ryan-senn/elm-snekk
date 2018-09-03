@@ -56,7 +56,7 @@ startGameDecoder =
     Decode.field "key" Decode.string
         |> Decode.andThen
             (\key ->
-                if key == "Space" then
+                if key == " " then
                     Decode.succeed StartGame
 
                 else

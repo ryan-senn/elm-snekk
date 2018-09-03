@@ -35,13 +35,13 @@ decoder =
 decodeDirection : String -> Decoder Direction
 decodeDirection key =
     case key of
-        "ArrowTop" ->
+        "ArrowUp" ->
             Decode.succeed North
 
         "ArrowRight" ->
             Decode.succeed East
 
-        "ArrowBottom" ->
+        "ArrowDown" ->
             Decode.succeed South
 
         "ArrowLeft" ->

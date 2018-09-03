@@ -4853,11 +4853,11 @@ var elm$json$Json$Decode$fail = _Json_fail;
 var elm$json$Json$Decode$succeed = _Json_succeed;
 var author$project$Direction$decodeDirection = function (key) {
 	switch (key) {
-		case 'ArrowTop':
+		case 'ArrowUp':
 			return elm$json$Json$Decode$succeed(0);
 		case 'ArrowRight':
 			return elm$json$Json$Decode$succeed(1);
-		case 'ArrowBottom':
+		case 'ArrowDown':
 			return elm$json$Json$Decode$succeed(2);
 		case 'ArrowLeft':
 			return elm$json$Json$Decode$succeed(3);
@@ -5596,7 +5596,7 @@ var author$project$Msg$StartGame = {$: 0};
 var author$project$Subs$startGameDecoder = A2(
 	elm$json$Json$Decode$andThen,
 	function (key) {
-		return (key === 'Space') ? elm$json$Json$Decode$succeed(author$project$Msg$StartGame) : elm$json$Json$Decode$fail('Not a valid StartGame key.');
+		return (key === ' ') ? elm$json$Json$Decode$succeed(author$project$Msg$StartGame) : elm$json$Json$Decode$fail('Not a valid StartGame key.');
 	},
 	A2(elm$json$Json$Decode$field, 'key', elm$json$Json$Decode$string));
 var author$project$Subs$startGame = function (gameState) {
